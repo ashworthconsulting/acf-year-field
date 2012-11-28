@@ -65,35 +65,35 @@ if( !class_exists( 'ACF_Year_Field' ) && class_exists( 'acf_Field' ) ) :
 			$field['startYear'] = isset($field['startYear']) ? $field['startYear'] : date('Y');
 			$field['yearRange'] = isset($field['yearRange']) ? $field['yearRange'] : self::YEAR_RANGE;
 
-			?>
-        <tr class="field_option field_option_<?php echo $this->name; ?>">
-            <td class="label">
-                <label><?php _e("Start Year",'acf'); ?></label>
-            </td>
-            <td>
-				<?php
-				$this->parent->create_field(array(
-					'type'	=>	'text',
-					'name'	=>	'fields['.$key.'][startYear]',
-					'value'	=>	$field['startYear'],
-				));
-				?>
-            </td>
-        </tr>
-        <tr class="field_option field_option_<?php echo $this->name; ?>">
-            <td class="label">
-                <label><?php _e("Year Range",'acf'); ?></label>
-            </td>
-            <td>
-				<?php
-				$this->parent->create_field(array(
-					'type'	=>	'text',
-					'name'	=>	'fields['.$key.'][yearRange]',
-					'value'	=>	$field['yearRange'],
-				));
-				?>
-            </td>
-        </tr>
+		?>
+	        <tr class="field_option field_option_<?php echo $this->name; ?>">
+	            <td class="label">
+	                <label><?php _e("Start Year",'acf'); ?></label>
+	            </td>
+	            <td>
+					<?php
+					$this->parent->create_field(array(
+						'type'	=>	'text',
+						'name'	=>	'fields['.$key.'][startYear]',
+						'value'	=>	$field['startYear'],
+					));
+					?>
+	            </td>
+	        </tr>
+	        <tr class="field_option field_option_<?php echo $this->name; ?>">
+	            <td class="label">
+	                <label><?php _e("Year Range",'acf'); ?></label>
+	            </td>
+	            <td>
+					<?php
+					$this->parent->create_field(array(
+						'type'	=>	'text',
+						'name'	=>	'fields['.$key.'][yearRange]',
+						'value'	=>	$field['yearRange'],
+					));
+					?>
+	            </td>
+	        </tr>
 		<?php
 		}
 
@@ -146,13 +146,13 @@ if( !class_exists( 'ACF_Year_Field' ) && class_exists( 'acf_Field' ) ) :
 
 		function admin_head()
 		{
-			?>
-        <style type="text/css">
-            .acf_postbox .field select.year {
-                width: 20%;
-                margin-left: 5px;
-            }
-        </style>
+		?>
+	        <style type="text/css">
+	            .acf_postbox .field select.year {
+	                width: 20%;
+	                margin-left: 5px;
+	            }
+	        </style>
 		<?php
 		}
 
