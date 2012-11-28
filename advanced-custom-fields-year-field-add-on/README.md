@@ -4,7 +4,7 @@ Advanced Custom Fields - Year Field add-on
 This is an add-on for the [Advanced Custom Fields](http://www.advancedcustomfields.com/)
 WordPress plugin that adds a Year field type.
 
-The year field lets you add a select field with pre-populated years as a list to choose from. Previously, you needed to choose "select" as your field type, and then manually add a list of values/labels you wanted to use. Now it's as simple as installing the plugin, adding your field, and tweaking any settings if you don't like the default values.
+The year field lets you add a select field to Advanced Custom Fields with pre-populated years as a list to choose from. Previously, you needed to choose "select" as your field type, and then manually add a list of values/labels you wanted to use. Now it's as simple as installing the plugin, adding your field, and tweaking any settings if you don't like the default values.
 
 Currently, you have control over the starting year in the list, as well as the "range", telling the field how far back to populate into the select box.
 
@@ -58,7 +58,7 @@ There is no need to call the Advanced Custom Fields `register_field()` method fo
 * Added to a Theme or Plugin
 	1. Download the plugin and extract it to your theme or plugin directory.
 	2. Include the `year-field.php` file in you theme's `functions.php` or plugin file.  
-	   `include_once( rtrim( dirname( __FILE__ ), '/' ) . '/acf-year-field/year-field.php' );`
+	   `include_once( rtrim( dirname( __FILE__ ), '/' ) . '/fields/year-field.php' );`
 
 Todo
 -------
