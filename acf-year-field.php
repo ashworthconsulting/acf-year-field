@@ -5,9 +5,10 @@
 * Description: The year field lets you add a select field to Advanced Custom Fields with pre-populated years as a list to choose from.
 * Author:      Will Ashworth
 * Author URI:  https://github.com/ashworthconsulting/acf-year-field
-* Version:     1.0.1
-* Text Domain: acf-year-field
+* Version:     1.0.0
 * License:     GPL2
+* Text Domain: acf-year-field
+* Domain Path: /lang/
 */
 
 if( !class_exists( 'ACF_Year_Field' ) && class_exists( 'acf_Field' ) ) :
@@ -235,102 +236,107 @@ if( !class_exists( 'ACF_Year_Field' ) && class_exists( 'acf_Field' ) ) :
 
 	}
 
-endif; //class_exists 'ACF_Address_Field'
+endif; //class_exists 'ACF_Year_Field'
 
-if( !class_exists( 'ACF_Address_Field_Helper' ) ) :
 
-/**
- * Advanced Custom Fields - Address Field Helper
- * 
- * This class is a Helper for the ACF_Address_Field class.
- * 
- * It provides:
- * Localization support and registering the textdomain with WordPress.
- * Registering the address field with Advanced Custom Fields. There is no need in your plugin or theme
- * to manually call the register_field() method, just include this file.
- * <code> include_once( rtrim( dirname( __FILE__ ), '/' ) . '/acf-address-field/address-field.php' ); </code>
- * 
- * @author Brian Zoetewey <brian.zoetewey@ccci.org>
- * @todo Provide shortcode support for address fields
- */
-class ACF_Address_Field_Helper {
-	/**
-	* WordPress Localization Text Domain
-	*
-	* Used in wordpress localization and translation methods.
-	* @var string
-	*/
-	const L10N_DOMAIN = 'acf-address-field';
-	
-	/**
-	 * Singleton instance
-	 * @var ACF_Address_Field_Helper
+if( !class_exists( 'ACF_Year_Field_Helper' ) ) :
+
+	/*
+	 * Advanced Custom Fields - Year Field Helper
+	 *
+	 * @author Brian Zoetewey <brian.zoetewey@ccci.org>
+	 *
 	 */
-	private static $instance;
-	
-	/**
-	 * Returns the ACF_Address_Field_Helper singleton
-	 * 
-	 * <code>$obj = ACF_Address_Field_Helper::singleton();</code>
-	 * @return ACF_Address_Field_Helper
-	 */
-	public static function singleton() {
-		if( !isset( self::$instance ) ) {
-			$class = __CLASS__;
-			self::$instance = new $class();
+	class ACF_Year_Field_Helper {
+		/*
+		 * Singleton instance
+		 * @var ACF_Year_Field_Helper
+		 *
+		 */
+		private static $instance;
+
+		/*
+		 * Returns the ACF_Year_Field_Helper singleton
+		 *
+		 * <code>$obj = ACF_Year_Field_Helper::singleton();</code>
+		 * @return ACF_Year_Field_Helper
+		 *
+		 */
+		public static function singleton()
+		{
+			if( !isset( self::$instance ) )
+			{
+				$class = __CLASS__;
+				self::$instance = new $class();
+			}
+			return self::$instance;
 		}
-		return self::$instance;
-	}
-	
-	/**
-	 * Prevent cloning of the ACF_Address_Field_Helper object
-	 * @internal
-	 */
-	private function __clone() {
-	}
-	
-	/**
-	 * Language directory path
-	 * 
-	 * Used to build the path for WordPress localization files.
-	 * @var string
-	 */
-	private $lang_dir;
-	
-	/**
-	 * Constructor
-	 */
-	private function __construct() {
-		$this->lang_dir = rtrim( dirname( realpath( __FILE__ ) ), '/' ) . '/languages';
-		
-		add_action( 'init', array( &$this, 'register_address_field' ), 5, 0 );
-		add_action( 'init', array( &$this, 'load_textdomain' ),        2, 0 );
-	}
-	
-	/**
-	 * Registers the Address Field with Advanced Custom Fields
-	 */
-	public function register_address_field() {
-		if( function_exists( 'register_field' ) ) {
-			register_field( 'ACF_Address_Field', __FILE__ );
+
+		/*
+		 * Prevent cloning of the ACF_Year_Field_Helper object
+		 * @internal
+		 *
+		 */
+		private function __clone()
+		{
+
+		}
+
+		/*
+		* WordPress Localization Text Domain
+		*
+		* Used in wordpress localization and translation methods.
+		* @var string
+		*
+		*/
+		const L10N_DOMAIN = 'acf-year-field';
+
+		/*
+		 * Language directory path
+		 *
+		 * Used to build the path for WordPress localization files.
+		 * @var string
+		 *
+		 */
+		private $lang_dir;
+
+		/*
+		 * Constructor
+		 *
+		 */
+		private function __construct()
+		{
+			$this->lang_dir = rtrim( dirname( realpath( __FILE__ ) ), '/' ) . '/lang';
+
+			add_action( 'init', array( &$this, 'register_field' ),  5, 0 );
+			add_action( 'init', array( &$this, 'load_textdomain' ), 2, 0 );
+		}
+
+		/*
+		 * Registers the Field with Advanced Custom Fields
+		 *
+		 */
+		public function register_field()
+		{
+			if( function_exists( 'register_field' ) )
+			{
+				register_field( 'ACF_Year_Field', __FILE__ );
+			}
+		}
+
+		/*
+		 * Loads the textdomain for the current locale if it exists
+		 *
+		 */
+		public function load_textdomain()
+		{
+			$locale = get_locale();
+			$mofile = $this->lang_dir . '/' . self::L10N_DOMAIN . '-' . $locale . '.mo';
+			load_textdomain( self::L10N_DOMAIN, $mofile );
 		}
 	}
-	
-	/**
-	* Loads the textdomain for the current locale if it exists
-	*/
-	public function load_textdomain() {
-		$locale = get_locale();
-		$mofile = $this->lang_dir . '/' . self::L10N_DOMAIN . '-' . $locale . '.mo';
-		load_textdomain( self::L10N_DOMAIN, $mofile );
-	}
-}
-endif; //class_exists 'ACF_Address_Field_Helper'
 
-// enable year select field
-#if( function_exists( 'register_field' ) )
-#{
-#	register_field('Year_field', dirname(__File__) . '/fields/acf-year.php');
-#}
+endif; //class_exists 'ACF_Year_Field_Helper'
 
-die(dirname(__File__));
+//Instantiate the Addon Helper class
+ACF_Year_Field_Helper::singleton();
