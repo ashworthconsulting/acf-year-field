@@ -2,7 +2,7 @@
 
 /*
 Plugin Name: Advanced Custom Fields: Year
-Plugin URI: https://github.com/manxstef/acf-year-field-type
+Plugin URI: https://github.com/manxstef/acf-year-field
 Description: The year field lets you add a select field to Advanced Custom Fields with pre-populated years as a list to choose from.
 Note that this is an updated fork of the acf-year-field plugin by Will Ashworth https://github.com/ashworthconsulting/acf-year-field
 Version: 1.0.0
