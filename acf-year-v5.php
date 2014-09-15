@@ -60,8 +60,8 @@ class acf_field_year extends acf_field {
 		
 				
 		// do not delete!
-    	parent::__construct();
-    	
+		parent::__construct();
+		
 	}
 	
 	
@@ -89,13 +89,21 @@ class acf_field_year extends acf_field {
 		*  More than one setting can be added by copy/paste the above code.
 		*  Please note that you must also have a matching $defaults value for the field name (font_size)
 		*/
-		
+	
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Font Size','acf-year'),
-			'instructions'	=> __('Customise the input font size','acf-year'),
-			'type'			=> 'number',
-			'name'			=> 'font_size',
-			'prepend'		=> 'px',
+			'label'			=> __( 'Start Year','acf-year' ),
+			'instructions'	=> __( 'The starting year to display in the select element when submitting data','acf-year' ),
+			'type'			=> 'text',
+			'name'			=> 'startYear',
+			'prepend'		=> '',
+		));
+
+		acf_render_field_setting( $field, array(
+			'label'			=> __( 'Year Range','acf-year' ),
+			'instructions'	=> __( 'The range of years that are displayed when submitting data','acf-year' ),
+			'type'			=> 'text',
+			'name'			=> 'yearRange',
+			'prepend'		=> '',
 		));
 
 	}
@@ -125,18 +133,35 @@ class acf_field_year extends acf_field {
 		*  This will show what data is available
 		*/
 		
-		echo '<pre>';
-			print_r( $field );
-		echo '</pre>';
+		// echo '<pre>';
+		// 	print_r( $field );
+		// echo '</pre>';
 		
-		
+		// defaults?
 		/*
-		*  Create a simple text input using the 'font_size' setting.
+		$field = array_merge($this->defaults, $field);
 		*/
+		// defaults
+		$field['startYear'] = isset($field['startYear']) ? $field['startYear'] : date('Y');
+		$field['yearRange'] = isset($field['yearRange']) ? $field['yearRange'] : $this->defaults['year_range'];
+
+		// perhaps use $field['preview_size'] to alter the markup?
+		// Generate Options
+		$startYear = intval( $field['startYear'] );
+		$endYear = ( $startYear + intval( $field['yearRange'] ) );
+		//$selectYear = ( $startYear - $field['ageLimit'] );
+		$years = range( $startYear, $endYear );
 		
-		?>
-		<input type="text" name="<?php echo esc_attr($field['name']) ?>" value="<?php echo esc_attr($field['value']) ?>" style="font-size:<?php echo $field['font_size'] ?>px;" />
-		<?php
+		// create Field HTML
+		echo '<select id="' . esc_attr( $field['name'] ) . '" class="' . esc_attr( $field['class'] ) . '" name="' . esc_attr( $field['name'] ) . '">' . "\n";
+		foreach ( $years as $year ) {
+			$selected = '';
+			if ( $year == $field['value'] ) {
+				$selected = ' selected';
+			}
+			echo '<option value="' . esc_textarea( $year ) . '"' . esc_html( $selected ) . '>' . esc_html( $year ) . '</option>' . "\n";
+		}
+		echo '</select>' . "\n";
 	}
 	
 		
@@ -190,43 +215,49 @@ class acf_field_year extends acf_field {
 	*  @return	n/a
 	*/
 
-	/*
-		
-	function input_admin_head() {
 	
+
+	function input_admin_head()
+	{
+	?>
+		<style type="text/css">
+			.acf-postbox .acf-field.field_type-year select {
+				width: 20%;
+				margin-left: 5px;
+			}
+		</style>
+	<?php
+	}
+	
+	
+	
+	
+	/*
+	*  input_form_data()
+	*
+	*  This function is called once on the 'input' page between the head and footer
+	*  There are 2 situations where ACF did not load during the 'acf/input_admin_enqueue_scripts' and 
+	*  'acf/input_admin_head' actions because ACF did not know it was going to be used. These situations are
+	*  seen on comments / user edit forms on the front end. This function will always be called, and includes
+	*  $args that related to the current screen such as $args['post_id']
+	*
+	*  @type	function
+	*  @date	6/03/2014
+	*  @since	5.0.0
+	*
+	*  @param	$args (array)
+	*  @return	n/a
+	*/
+	
+	/*
+	
+	function input_form_data( $args ) {
 		
 		
+	
 	}
 	
 	*/
-	
-	
-	/*
-   	*  input_form_data()
-   	*
-   	*  This function is called once on the 'input' page between the head and footer
-   	*  There are 2 situations where ACF did not load during the 'acf/input_admin_enqueue_scripts' and 
-   	*  'acf/input_admin_head' actions because ACF did not know it was going to be used. These situations are
-   	*  seen on comments / user edit forms on the front end. This function will always be called, and includes
-   	*  $args that related to the current screen such as $args['post_id']
-   	*
-   	*  @type	function
-   	*  @date	6/03/2014
-   	*  @since	5.0.0
-   	*
-   	*  @param	$args (array)
-   	*  @return	n/a
-   	*/
-   	
-   	/*
-   	
-   	function input_form_data( $args ) {
-	   	
-		
-	
-   	}
-   	
-   	*/
 	
 	
 	/*
@@ -413,7 +444,7 @@ class acf_field_year extends acf_field {
 	*  @param	$input (string) the corresponding input name for $_POST value
 	*  @return	$valid
 	*/
-	
+	 
 	/*
 	
 	function validate_value( $valid, $value, $field, $input ){
