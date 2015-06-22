@@ -221,7 +221,8 @@ class acf_field_year extends acf_field {
 	{
 	?>
 		<style type="text/css">
-			.acf-postbox .acf-field.field_type-year select {
+			.acf-postbox .acf-field.field_type-year select,
+			.acf-postbox .acf-field.acf-field-year select {
 				width: 20%;
 				margin-left: 5px;
 			}
