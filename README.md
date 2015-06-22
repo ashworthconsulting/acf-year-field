@@ -20,31 +20,31 @@ This new field supports all interactions that other default fields do, such as s
 
 #### PHP Examples
 
-    <p><?php the_field('birth_year'); ?></p>
+    <p><?php the_field( 'birth_year' ); ?></p>
 
 …or…
 
     <?php
-    $birth_year = get_field('birth_year');
+    $birth_year = get_field( 'birth_year' );
     // do something with $birth_year
     ?>
 
 …or…
 
     <?php
-    if(get_field('birth_year'))
-    {
-    	echo '<p>' . get_field('birth_year') . '</p>';
+    if ( get_field( 'birth_year' ) ) {
+    	// Always sanitise/"late escape" your output
+    	echo '<p>' . absint( get_field( 'birth_year' ) ) . '</p>';
     }
     ?>
 
 **Please Note:** This is an add-on for the Advanced Custom Fields WordPress plugin and will not provide any functionality to WordPress unless Advanced Custom Fields is installed and activated.
 
 ### Source Repository on GitHub
-https://github.com/ashworthconsulting/acf-year-field
+https://github.com/ManxStef/acf-year-field
 
 ### Bugs or Suggestions
-https://github.com/ashworthconsulting/acf-year-field/issues
+https://github.com/ManxStef/acf-year-field/issues
 
 Installation
 ------------
